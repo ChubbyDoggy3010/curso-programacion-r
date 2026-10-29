@@ -1093,22 +1093,20 @@ No creo que sea adecuada para pronosticar el éxito de cualquier jugador, porque
 
 a) Una posición casi desaparece con la propuesta. ¿Cuál, y qué prueba lo provoca? Busca una explicación razonable de por qué esos jugadores no la hacen.
 
-# ¿Qué proporción de cada posición NO hizo el press de banca?
-
 ```{r}
+# ¿Qué proporción de cada posición NO hizo el press de banca?
 base |>
   group_by(simple_pos) |>                                   # separa a los jugadores por posición
   summarise(prop_sin_bench = mean(is.na(bench_press))) |>   # proporción a la que le falta bench_press
   arrange(desc(prop_sin_bench))                             # ordena de mayor a menor
-
-b) Si quitas la condición de `bench_press`, ¿cuántos jugadores recuperas? ¿Cambia tu conclusión?
 ```
 
 Casi desaparecen los quarterbacks (de 170 a 4) por el press de banca. Casi nignuno de ellos lo hace porque no es relevante para lanzar y saben que existe un riesgo real de lastimarse el hombre. Asimismo, no es considerado por los scouts una prueba estratégica o fundamental para los QB.
 
-# Misma propuesta del jefe, pero sin exigir press de banca
+b) Si quitas la condición de `bench_press`, ¿cuántos jugadores recuperas? ¿Cambia tu conclusión?
 
 ```{r}
+# Misma propuesta del jefe, pero sin exigir press de banca
 base_sin_bench <- base |>
   filter(!is.na(forty), !is.na(vert_leap), !is.na(broad_jump), !is.na(shuttle))
 
@@ -1118,176 +1116,4 @@ table(base_sin_bench$simple_pos)             # ¿regresan los QB?
 sum(base_sin_bench$draft_round == 1)         # ¿cuántos de primera ronda hay ahora?
 ```
 
-Sin bench press, la mayoría de los jugadores que son QB regresan, es decir 113 de 117, cuando antes eran 4. Aunque la base mejore, mi conclusión permanece intacta: exigir pruebas completa s (5) elimina a jugadores de forma no aleatoria y considero que genera un modelo un poco inútil. 
-
-## Parte B. Tu repositorio en GitHub
-
-::: {.aviso}
-**Antes de empezar: tu repositorio será público.** Cualquiera en internet podrá leerlo, y lo que subes queda en el historial aunque después lo borres. Nunca deben aparecer en él contraseñas, tokens o claves de acceso, códigos de verificación ni datos personales innecesarios (teléfono, domicilio, matrícula, fecha de nacimiento). Tu nombre basta. Si quieres que tu correo no aparezca en los cambios, activa en GitHub *Settings > Emails > Keep my email addresses private*.
-:::
-
-## Paso 1. Crea tu cuenta de GitHub (si no tienes una)
-
-1. Entra a <https://github.com> y pulsa **Sign up**.
-2. Escribe tu correo, una contraseña y un **nombre de usuario**. El nombre de usuario será público y formará parte de la dirección de tu repositorio: elige uno sobrio (por ejemplo, tu nombre y apellido sin espacios). Piensa que puede acabar en tu currículum.
-3. Completa la verificación que te pida GitHub (un rompecabezas y un código que llega a tu correo).
-4. Si GitHub te pide activar la **verificación en dos pasos**, sigue sus instrucciones y guarda los códigos de recuperación en un lugar seguro, fuera del repositorio.
-
-**Cómo saber que funcionó:** al entrar a <https://github.com> ves tu imagen de perfil (o un ícono) en la esquina superior derecha.
-
-## Paso 2. Crea el repositorio
-
-1. Pulsa el botón **+** de la esquina superior derecha y elige **New repository** (o entra a <https://github.com/new>).
-2. En **Owner** debe aparecer tu nombre de usuario.
-3. En **Repository name** escribe exactamente `curso-programacion-r`: minúsculas, guiones, sin acentos ni espacios. Si escribes espacios o acentos, GitHub los cambiará por guiones y el nombre ya no coincidirá con el que usan todas las instrucciones del curso.
-
-**Cómo saber que funcionó:** GitHub indica junto al campo si el nombre está disponible.
-
-## Paso 3. Añade una descripción
-
-En **Description** escribe una frase como: *Proyecto de R: ¿qué características de un jugador permiten pronosticar su éxito en la NFL?*
-
-## Paso 4. Déjalo público
-
-En la opción de visibilidad elige **Public**. Cualquiera podrá verlo, pero solo tú podrás modificarlo.
-
-## Paso 5. Crea el repositorio con un `README.md` que documente los datos
-
-1. Activa la opción para añadir un README (*Add a README file* o *Add README*). Deja lo demás como está.
-2. Pulsa **Create repository**.
-3. Abre `README.md`, pulsa el lápiz (*Edit this file*) y reemplaza el contenido por esta plantilla, **completada con tus palabras**:
-
-```
-# Pronosticar el éxito en la NFL
-
-Proyecto del curso "Programar con criterio en la era de la IA".
-Pregunta: ¿qué características de un jugador, conocidas en el draft,
-permiten pronosticar su éxito profesional?
-
-Autor/a: [tu nombre y apellido]
-
-## Datos
-- Archivo: nfl_data.csv del repositorio phcs971/nfl-draft-dataset
-  (licencia MIT), leído desde una URL fijada a la versión 54730ea.
-- Contenido: [qué contiene, cuántas filas y columnas]
-- Base de análisis: [quiénes entran y cuántos son]
-
-## Variables principales
-- Éxito observado: [variable y qué mide]
-- Predictores: [variables y por qué se conocen en el draft]
-
-## Decisiones de limpieza
-1. [decisión y razón]
-2. ...
-
-## Carpetas
-- sesion-1/ a sesion-5/: trabajos de cada sesión
-```
-
-4. Pulsa **Commit changes...**, escribe en **Commit message** algo descriptivo, como *Documentar datos y decisiones de limpieza*, y confirma en la rama `main`.
-
-**Cómo saber que funcionó:** la portada del repositorio muestra tu README debajo de la lista de archivos.
-
-## Paso 6. Cuatro palabras que vas a usar todo el curso
-
-- **Repositorio**: la carpeta en línea, con dirección propia: `https://github.com/tu-usuario/curso-programacion-r`.
-- **Archivo**: cada documento dentro del repositorio, organizado en carpetas.
-- **Cambio** (*commit*): cada vez que creas, subes, editas o borras archivos y confirmas, GitHub registra un cambio con fecha, autor y mensaje.
-- **Historial**: la lista de todos los cambios. Encima de la lista de archivos, el enlace con un reloj y la palabra *Commits*. Para un solo archivo: ábrelo y pulsa **History**.
-
-**Comprueba:** abre el historial. Haz clic en la edición del README: GitHub muestra en verde lo que añadiste y en rojo lo que quitaste.
-
-## Paso 7. Crea la estructura de carpetas
-
-```
-curso-programacion-r/
-├── README.md
-├── sesion-1/
-├── sesion-2/
-├── sesion-3/
-├── sesion-4/
-└── sesion-5/
-```
-
-No hace falta subir los datos: tu código los lee de la URL fijada. GitHub no guarda carpetas vacías, así que cada carpeta se crea con un archivo de notas:
-
-1. En la portada, **Add file > Create new file**.
-2. En el nombre escribe `sesion-1/notas.md`. Al escribir la diagonal `/`, GitHub convierte `sesion-1` en una carpeta.
-3. En el contenido escribe `# Sesión 1`.
-4. Pulsa **Commit changes...**, escribe un mensaje como *Crear carpeta de la sesión 1* y confirma.
-5. Repite para `sesion-2` a `sesion-5`.
-
-**Cómo saber que funcionó:** en la portada ves `README.md` y las cinco carpetas.
-
-## Paso 8. Sube tu primer archivo de trabajo
-
-**8.1 Organiza tu computadora igual que el repositorio.** Crea una carpeta `curso-programacion-r` con una carpeta `sesion-1` y mueve ahí `sesion1_trabajo.Rmd`.
-
-**8.2 Compila.** Abre el archivo en RStudio y pulsa **Knit**. Como los datos se leen de internet, no hay rutas que cambiar. Comprueba que la parte A aparece completa en el HTML.
-
-**8.3 Súbelo.** En GitHub, entra a `sesion-1`, **Add file > Upload files**, arrastra `sesion1_trabajo.Rmd` (y, si quieres, su HTML). Mensaje: *Agregar trabajo de la sesión 1*. **Commit changes**.
-
-**8.4 Escribe tu nota de entrega.** Edita `sesion-1/notas.md` con esto, completado con tus palabras:
-
-```
-# Sesión 1
-
-1. Lo que quería conseguir:
-2. Archivos y código: sesion1_trabajo.Rmd (carga nfl_data.csv, construye
-   la base de análisis y, al final, la parte A)
-3. Comprobaciones que hice: (filas en cada paso, ¿compiló?, ¿con qué
-   comprobaste la propuesta del analista jefe?)
-4. Cambios que conservé o descarté: (qué hiciste con la propuesta y por qué)
-5. Lo que puedo afirmar: dos o tres frases sobre la base de análisis
-```
-
-Confirma con un mensaje como *Nota de entrega de la sesión 1*.
-
-## Paso 9. Comprueba que todo está bien
-
-1. Abre `sesion-1/sesion1_trabajo.Rmd` en GitHub. GitHub muestra el texto y el código, pero no los resultados: es normal. Busca una de tus respuestas para confirmar que subiste **tu** versión.
-2. Si subiste el HTML, GitHub lo muestra como código. Quien lo quiera ver puede descargarlo con *Download raw file*.
-3. Abre el historial (*Commits*): un cambio por paso, cada uno con su mensaje.
-4. Abre tu repositorio en una ventana privada del navegador (sin sesión iniciada): eso es lo que ve cualquier persona. Si aparece un error 404, quedó privado. Corrígelo en **Settings**, zona roja *Danger Zone*, **Change visibility**, **Public**.
-
-## Paso 10. Entrega el enlace
-
-1. Copia la dirección de la portada de tu repositorio: `https://github.com/tu-usuario/curso-programacion-r`.
-2. Pégala en la actividad «Tarea 1» de la plataforma del curso. Antes, pruébala en la ventana privada.
-
-## Errores habituales y cómo resolverlos
-
-| Lo que pasa | Por qué suele pasar | Qué hacer |
-|-------------|---------------------|-----------|
-| `there is no package called 'dplyr'` | El paquete no está instalado | Ejecuta en la consola `install.packages("dplyr")` |
-| Al hacer Knit, error al leer la URL | No hay internet en ese momento | Copia `datos/nfl_data.csv` del material del curso a una carpeta `datos` junto a tu archivo |
-| `object 'base' not found` al ejecutar un bloque suelto | No ejecutaste antes los bloques anteriores | *Run > Run All Chunks Above* |
-| El repositorio se llama distinto | Se escribió con acentos o mayúsculas | **Settings > General > Repository name**, corrige y pulsa *Rename* |
-| Subí el archivo a la carpeta equivocada | Se pulsó *Upload files* desde la portada | Abre el archivo, lápiz, y en el nombre escribe la carpeta delante (`sesion-1/...`) |
-| En la ventana privada el enlace da *404* | El repositorio quedó privado o el enlace tiene una errata | Paso 9.4 |
-| GitHub rechaza la subida porque contiene un secreto | Hay una clave o token en el archivo | Elimínalo antes de volver a subirlo |
-
-## Lista de comprobación final
-
-- [ ] El repositorio se llama `curso-programacion-r`, es público y tiene descripción.
-- [ ] El `README.md` documenta el archivo de datos, la base de análisis, las variables principales y las decisiones de limpieza.
-- [ ] Existen las carpetas `sesion-1` a `sesion-5`.
-- [ ] `sesion-1/sesion1_trabajo.Rmd` es mi versión, con mis respuestas, y compila de principio a fin.
-- [ ] La parte A está al final: la propuesta, mi comprobación, mi evaluación, mi alternativa y el seguimiento.
-- [ ] `sesion-1/notas.md` tiene las cinco partes.
-- [ ] Los mensajes de los cambios describen lo que hice.
-- [ ] No hay contraseñas, tokens ni datos personales innecesarios.
-- [ ] Pegué el enlace en la actividad «Tarea 1» de la plataforma del curso.
-
-## Cómo se evalúa
-
-| Criterio | Qué se revisa |
-|----------|---------------|
-| Organización | Nombre, descripción, README que documenta datos y decisiones, estructura de carpetas |
-| Archivo de trabajo | Está en `sesion-1/`, compila y contiene tus respuestas de clase |
-| Parte A | Pones a prueba la propuesta con los datos, explicas sus consecuencias, propones y calculas una alternativa justificada y respondes el seguimiento razonando |
-| Trazabilidad | El historial muestra los pasos con mensajes que se entienden |
-| Nota de entrega | Las cinco partes están completas |
-| Cuidado | No hay información sensible y el repositorio se abre sin iniciar sesión |
-
-No se evalúa la rapidez ni el dominio de Git: se evalúa que el repositorio se pueda revisar y que puedas explicar y defender lo que hay en tu archivo.
+Sin bench press, recupero 465 jugadores en total (de 1,596 a 2,061), y la mayoría de los que son QB regresan, es decir 113 de 117, cuando antes eran 4. Aunque la base mejore, mi conclusión permanece intacta: exigir pruebas completas (5) elimina a jugadores de forma no aleatoria y considero que genera un modelo un poco inútil. 
